@@ -1,0 +1,65 @@
+1. Bomber ..does flying only and leaves some bombs on their way
+
+2. Lander ..Is the most interesting behaviour..appears out of thin air and does flying mostly 
+	near the ground and shoots at the player (not precise).. BUT suddenly captures a human in 
+	a random moment and tears it to the sky ..in that phase the player can shoot the lander 
+	and rescue the human in the air ..but when the lander with the captured human reaches the 
+	sky it becomes a mutant.
+
+3. Mutant ..is the most aggressive enemy.. it flies directly to the player 
+	(in a little zig zag to avoid the player fire) and tries to collide with the player, also it 
+	shoots at the player at the same time
+
+4. Pod ..does nothing but when hit it releases 4 to 5 swarmers
+
+5. Swarmer ..is part of a enemy group (the swarmers) which all only can go together 
+	in one direction, they can change direction but only when they long passed the player
+	
+	Implementation: have a list of Swarmer sprite lists. When a pod is broken, create a batch of 
+	swarmers that all go in the same direction.
+
+6. Baiter ..this guy is very nasty because it appears out of thin air when you are not fast enough 
+	in clearing up the level. It is not part of the level..it is only there to terrorize you.. 
+	it is faster than you, you can not escape.. you have to shoot it, it goes in a zig zag with 
+	impulse like direction changes ..and there is no limit in the amount of them appearing.
+
+
+I need to create a system of movement patterns. Something that could work for all movement would be 
+a list of lists with a certain format
+A movement list will follow a template of: [Direction, Speed, How often direction is changed]
+Majority of these parameters will be followed with a certain range of randomness.
+
+code in case i use this method:
+movement_patterns = [
+    #Lander
+    [Vector, 0.0, 0.0],
+    #Mutant
+    [0.0, 0.0, 0.0],
+    #Baiter
+    [0.0, 0.0, 0.0],
+    #Bomber
+    [randomVector(), 2.0, 3.5],
+    #Pod
+    [0.0, 0.0, 0.0],
+    #Swarmer
+    [0.0, 0.0, 0.0]]
+
+#These are the random weights for each 
+movement_variation = [
+    #Lander
+    [0.0, 0.0, 0.0],
+    #Mutant
+    [0.0, 0.0, 0.0],
+    #Baiter
+    [0.0, 0.0, 0.0],
+    #Bomber
+    [0.0, random.uniform(-1.5, 0), random.uniform(-1.75, 1.75)],
+    #Pod
+    [0.0, 0.0, 0.0],
+    #Swarmer
+    [0.0, 0.0, 0.0]]
+
+OR
+
+I could create an empty method in the Manti class, and for every manti species created, i can overwrite that method
+and write behavioural code there. This is more code, but not as complicated.
